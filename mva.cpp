@@ -159,7 +159,10 @@ int main(int argc, char *argv[])
             case 'd':
                 inputFile.open(optarg);
                 if (inputFile.is_open() && num_stations==NUM_STATIONS_DEFAULT){
-                    num_stations=readFromFile(inputFile, demands);
+                    try
+                    {  num_stations=readFromFile(inputFile, demands);     }
+                    catch (std::invalid_argument exc)
+                    {  std::cerr<< " ---! Demands File has wrong format !--- " << std::endl; exit(0);}
                     inputFile.close();
                     break;
                 }
